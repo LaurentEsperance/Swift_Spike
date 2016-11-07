@@ -8,6 +8,8 @@
 
 import Foundation
 
+///////////// TP 01 ///////////////////
+
 //Déclarez vos fonctions en dessous de cette ligne
 func exercice1() {
     print("Entrez votre prénom :")
@@ -159,11 +161,11 @@ func exercice8(){
 func nbAllumettesOrdinateur(nbAllumettesEnJeu:Int)->Int{
     let nbAllumettesChoisieParOrdinateur:Int
     nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: min(3,nbAllumettesEnJeu))
-//    if (nbAllumettesEnJeu >= 3) {
-//        nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: 3)
-//    } else {
-//        nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: nbAllumettesEnJeu)
-//    }
+    //    if (nbAllumettesEnJeu >= 3) {
+    //        nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: 3)
+    //    } else {
+    //        nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: nbAllumettesEnJeu)
+    //    }
     print("L'ordinateur a retiré \(nbAllumettesChoisieParOrdinateur) allumette" + (nbAllumettesChoisieParOrdinateur > 1 ? "s" : ""))
     return nbAllumettesChoisieParOrdinateur
 }
@@ -190,6 +192,96 @@ func nbAllumettesJoueur(nbAllumettesEnJeu:Int) ->Int {
     } while ((nbAllumettesRetirees > 3) || (nbAllumettesRetirees < 0))
     return nbAllumettesRetirees
 }
+
+
+///////////// TP 02 ///////////////////
+func tp02ex01(){
+    var longCot1:Double
+    var longCot2:Double
+    repeat{
+        print("Donnez la longueur du premier côté")
+        longCot1 = readDouble()
+    } while longCot1 < 0
+    
+    repeat{
+        print("Donnez la longueur du deuxième côté")
+        longCot2 = readDouble()
+    } while longCot2 < 0
+    let longCot3 = pythagore(l1: longCot1, l2: longCot2)
+    print("La longueur de l'hypothenuse est de \(longCot3)")
+}
+
+func pythagore(l1:Double, l2:Double) -> Double {
+    let hypothenuse = sqrt(pow(l1, 2)+pow(l2,2))
+    return hypothenuse
+}
+
+func tp02ex02() {
+    demandeValeurs(diviseur: 7)
+    demandeValeurs(diviseur: 4)
+    demandeValeurs(diviseur: 2)
+}
+
+func demandeValeurs(diviseur:Int){
+    var nbValeurs:Int = 0
+    var valeurSaisie:Int = 0
+    var nbValeursDivNum:Int = 0
+    repeat {
+        print("Entrez une nouvelle valeur")
+        valeurSaisie = readInt()
+        if (valeurSaisie != 0) {
+            nbValeurs += 1
+            if (valeurSaisie % diviseur == 0){
+                nbValeursDivNum += 1
+            }
+        }
+        
+    } while valeurSaisie != 0
+    print("Vous avez entré \(nbValeurs) valeurs en tout")
+    print("Vous avez entré \(nbValeursDivNum) valeurs divisible par \(diviseur)")
+}
+
+func tp02ex03() {
+    var nVal:Int = 0
+    repeat {
+        print("Veuillez saisir la dimension de la multiplication")
+        nVal = readInt()
+    } while nVal < 0
+    if (nVal > 0) {
+        for nLigne in 1...nVal {
+            for nCol in 1...nVal {
+                print("\(nCol*nLigne) ",terminator:"")
+            }
+            print("")
+        }
+    }
+    
+}
+
+func tp02ex04() {
+    var nbApproch:Int = 0
+    var sommeEntierVal:Int = 0
+    var iterateur:Int = 0
+    
+    repeat {
+        print("Veuillez saisir un nombre positif")
+        nbApproch = readInt()
+    } while nbApproch < 0
+    
+    repeat {
+        iterateur += 1
+        sommeEntierVal += iterateur
+    } while sommeEntierVal < nbApproch
+    
+    // on vérifie le cas ou l'écart est le plus petit avec ou sans le dernier élément ajouté 
+    // dans le cas d'égalité on prend l'élément le plus petit
+    if ((sommeEntierVal - nbApproch) >= (nbApproch - (sommeEntierVal - iterateur ))){
+        sommeEntierVal -= iterateur
+    }
+    
+    print("La somme la plus proche est \(sommeEntierVal)")
+}
+
 //Commencez vos instructions en dessous de cette ligne
 //exercice1()
 //exercice2()
@@ -197,7 +289,8 @@ func nbAllumettesJoueur(nbAllumettesEnJeu:Int) ->Int {
 //exercice6a()
 //exercice6b()
 //exercice7()
-exercice8()
-
-
-
+//exercice8()
+//tp02ex01()
+//tp02ex02()
+//tp02ex03()
+tp02ex04()
