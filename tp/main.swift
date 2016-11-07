@@ -15,7 +15,7 @@ func exercice1() {
     print("Bonjour \(valeurSaisie) !")
 }
 
-func excercice2(){
+func exercice2(){
     print ("Entrez la première note :")
     let notePremiereSaisie:Double = readDouble()
     print ("Entrez la deuxième note :")
@@ -26,7 +26,7 @@ func excercice2(){
     print("Moyenne des notes \(moyenne)")
 }
 
-func excercice3(){
+func exercice3(){
     print ("Entrez la base du triangle :")
     let base:Double = readDouble()
     print ("Entrez la hauteur du triangle:")
@@ -35,7 +35,7 @@ func excercice3(){
     print("Aire du triangle \(aire)")
 }
 
-func excercice4(){
+func exercice4(){
     let PI:Double = 3.14159265
     print ("Entrez le rayon du cercle :")
     let rayon:Double = readDouble()
@@ -44,17 +44,23 @@ func excercice4(){
 }
 
 
-func excercice5(){
-    print ("Entrez un chiffre :")
-    let chiffre:Int = readInt()
+func exercice5(){
+    var chiffre:Int
+    repeat {
+        print ("Entrez un chiffre positif:")
+        chiffre = readInt()
+    } while chiffre < 0
+    
     var factorielValeur:Int = 1;
-    for n in 1...chiffre{
-        factorielValeur = factorielValeur*n
+    if (chiffre > 0) {
+        for n in 1...chiffre{
+            factorielValeur = factorielValeur*n
+        }
     }
-    print("Factoriel \(factorielValeur)")
+    print("Factoriel de \(chiffre) est \(factorielValeur)")
 }
 
-func excercice6a(){
+func exercice6a(){
     print ("Entrez le nombre de notes :")
     let nbNotes:Int = readInt()
     var totalNotes:Double = 0
@@ -73,24 +79,44 @@ func excercice6a(){
     print("La moyenne des \(nbNotes) notes est de \(moyenne)")
 }
 
-func excercice7(){
+func exercice6b() {
+    var nbNotes:Int = 0
+    var noteSaisie:Double = 0
+    var sommeNotes:Double = 0
+    repeat{
+        print("Entrez la note \(nbNotes + 1)")
+        noteSaisie = readDouble()
+        if (noteSaisie >= 0) {
+            sommeNotes += noteSaisie
+            nbNotes += 1
+        }
+    } while noteSaisie >= 0
+    if (nbNotes > 0){
+        let moyenne = sommeNotes / Double(nbNotes)
+        print("La moyenne des \(nbNotes) notes est de \(moyenne)")
+    }
+}
+
+func exercice7(){
     let valChoisieParOrdinateur = generateRandomNumber(min: 1, max: 5)
     var jeuEnCours:Bool = true
+    var nbTentatives:Int = 0
     while jeuEnCours {
         print ("Entrez votre nombre :")
+        nbTentatives += 1
         let nbSaisi:Int = readInt()
         if (nbSaisi > valChoisieParOrdinateur) {
             print ("Moins")
         } else if (nbSaisi < valChoisieParOrdinateur) {
             print ("Plus")
         } else {
-            print ("Bravo")
+            print ("Bravo vous avez réussi en \(nbTentatives) tentatives")
             jeuEnCours = false
         }
     }
 }
 
-func excercice8(){
+func exercice8(){
     var nbAllumettesEnCours : Int = 20
     var jeuEnCours:Bool = true
     var joueurEnCours :String
@@ -116,7 +142,8 @@ func excercice8(){
             nbAllumettesRetirees = nbAllumettesJoueur(nbAllumettesEnJeu: nbAllumettesEnCours)
             joueurEnCours = "Ordinateur"
         default:
-            nbAllumettesRetirees = nbAllumettesOrdinateur(nbAllumettesEnJeu: nbAllumettesEnCours)
+            //nbAllumettesRetirees = nbAllumettesOrdinateur(nbAllumettesEnJeu: nbAllumettesEnCours)
+            nbAllumettesRetirees = nbAllumettesIA(nbAllumettesEnJeu: nbAllumettesEnCours)
             joueurEnCours = "Joueur"
         }
         
@@ -131,12 +158,22 @@ func excercice8(){
 
 func nbAllumettesOrdinateur(nbAllumettesEnJeu:Int)->Int{
     let nbAllumettesChoisieParOrdinateur:Int
-    if (nbAllumettesEnJeu >= 3) {
-        nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: 3)
-    } else {
-        nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: nbAllumettesEnJeu)
+    nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: min(3,nbAllumettesEnJeu))
+//    if (nbAllumettesEnJeu >= 3) {
+//        nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: 3)
+//    } else {
+//        nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: nbAllumettesEnJeu)
+//    }
+    print("L'ordinateur a retiré \(nbAllumettesChoisieParOrdinateur) allumette" + (nbAllumettesChoisieParOrdinateur > 1 ? "s" : ""))
+    return nbAllumettesChoisieParOrdinateur
+}
+
+func nbAllumettesIA(nbAllumettesEnJeu:Int)->Int{
+    var nbAllumettesChoisieParOrdinateur:Int = (nbAllumettesEnJeu - 1) % 4
+    if (nbAllumettesChoisieParOrdinateur == 0) {
+        nbAllumettesChoisieParOrdinateur = generateRandomNumber(min: 1, max: min(3,nbAllumettesEnJeu))
     }
-    print("L'ordinateur a retiré \(nbAllumettesChoisieParOrdinateur) allumettes")
+    print("L'ordinateur a retiré \(nbAllumettesChoisieParOrdinateur) allumette" + (nbAllumettesChoisieParOrdinateur > 1 ? "s" : ""))
     return nbAllumettesChoisieParOrdinateur
 }
 
@@ -153,14 +190,14 @@ func nbAllumettesJoueur(nbAllumettesEnJeu:Int) ->Int {
     } while ((nbAllumettesRetirees > 3) || (nbAllumettesRetirees < 0))
     return nbAllumettesRetirees
 }
-
 //Commencez vos instructions en dessous de cette ligne
 //exercice1()
-//excercice2()
-//excercice5()
-//excercice6a()
-//excercice7()
-excercice8()
+//exercice2()
+//exercice5()
+//exercice6a()
+//exercice6b()
+//exercice7()
+exercice8()
 
 
 
